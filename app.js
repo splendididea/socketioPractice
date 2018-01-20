@@ -1,15 +1,10 @@
 var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-server.listen(9999);
-console.log('Server is starting port 9999');
 app.get('/', function(req, res){
-
-    // console.log('index!!!!!!');
-    res.sendFile( __dirname + '/index.html');
-}); 
-
+    res.sendFile(__dirname + '/index.html');
+});
 
 io.on('connection', function(socket){
     console.log('connection!!!!');
@@ -23,6 +18,11 @@ io.on('connection', function(socket){
     });
 
     socket.on('disconnect',function(data){
+        console.log('disconnect');
         io.emit('User disconnected');
     });
+});
+
+http.listen( 9999 , function(){
+    console.log('Server Listening 9999');
 });
