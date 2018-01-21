@@ -18,7 +18,14 @@
   <script>
       $(function(){
         var socket = io();
-        
+        $('form').submit(function(){
+          socket.emit('chat', $('#m').val());
+        });
+
+        socket.on('recieve', function(data){
+          console.log(data);
+        })
+
       });
   </script>
   <body>

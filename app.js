@@ -19,9 +19,14 @@ io.on('connection', function(socket){
 
     socket.on('disconnect',function(data){
         console.log('disconnect');
-        io.emit('User disconnected');
+        //io.emit('User disconnected');
     });
-});
+
+    socket.on('chat', function(data){
+        console.log(data);
+        socket.emit('recieve',data);
+    });
+}); 
 
 http.listen( 9999 , function(){
     console.log('Server Listening 9999');
