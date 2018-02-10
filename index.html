@@ -13,6 +13,13 @@
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
+ 
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>  
   <script>
@@ -22,17 +29,18 @@
           socket.emit('chat', $('#m').val());
         });
 
+
+
         socket.on('recieve', function(data){
+
+          // 들어오질 않는다. 
+          debugger;
+          console.log("##### recieve  ####");
           console.log(data);
-        })
+        });
+
 
       });
   </script>
-  <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-  </body>
 </html>
     

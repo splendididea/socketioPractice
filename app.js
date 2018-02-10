@@ -1,6 +1,8 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
+var port = process.env.PORT || 9999;
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
@@ -22,12 +24,20 @@ io.on('connection', function(socket){
         //io.emit('User disconnected');
     });
 
+    // 새 메시지 보내기
+    socket.on('new message', function(data){
+        socket.broadcast.emit('new message', {
+            username: socket.username, 
+            message: data
+        });
+    });
+
     socket.on('chat', function(data){
         console.log(data);
-        socket.emit('recieve',data);
+        socket.emit('recieve', data);
     });
 }); 
 
-http.listen( 9999 , function(){
+http.listen( port , function(){
     console.log('Server Listening 9999');
 });
